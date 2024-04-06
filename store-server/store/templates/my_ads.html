@@ -1,0 +1,31 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Мои объявления
+{% endblock title %}
+
+
+{% block content %}
+    {% if my_ads %}
+        {% for my_ad in my_ads %}
+            <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">{{ my_ad.title }}</h1>
+                    <p class="col-md-8 fs-4">{{ my_ad.description }}</p>
+                    <a href="{% url 'ad_detail' my_ad.pk %}">
+                    <button class="btn btn-primary btn-lg" type="button">Посмотреть объявление</button></a>
+
+                     <a class="text-decoration-none text-secondary" href="{% url 'ad_update' my_ad.id %}">
+                         <button class="btn btn-light btn-lg text-secondary me-2" type="button">Изменить</button></a>
+                     <a class="text-decoration-none text-secondary" href="{% url 'ad_delete' my_ad.id %}">
+                         <button class="btn btn-light btn-lg text-secondary me-2" type="button">Удалить</button></a>
+                    <p></p>
+                    <p>{{ my_ad.published_date }} {{ my_ad.author.user.username }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1 class="display-5 fw-bold text-sm-center">У вас пока нет объявлений</h1>
+    {% endif %}
+{% endblock content %}

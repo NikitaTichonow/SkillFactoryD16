@@ -1,0 +1,16 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Создание объявления
+{% endblock title %}
+
+
+{% block content %}
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.media }}
+    <input class="btn btn-primary btn-lg px-4 gap-3" type="submit" value="Опубликовать">
+  </form>
+{% endblock content %}

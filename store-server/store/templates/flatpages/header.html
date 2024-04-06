@@ -1,0 +1,82 @@
+<header>
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+          </a>
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li>
+              <a href="{% url 'ads_list' %}" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
+                Главная страница
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'category_list' %}" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
+                Категории
+              </a>
+            </li>
+            {% if request.user.is_authenticated %}
+              <li>
+                <a href="{% url 'my_ads' %}" class="nav-link text-white">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#table"/></svg>
+                  Мои объявления
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'my_ads_reply_list' %}" class="nav-link text-white">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
+                  Отклики на объявления
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'my_reply' %}" class="nav-link text-white">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+                  Мои отклики
+                </a>
+                </li>
+                  <li>
+              <a href="{% url 'subscriptions' %}" class="nav-link text-white">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+                  Подписки
+                </a>
+                </li>
+                  <li>
+              <a href="{% url 'admin:index' %}" class="nav-link text-white">
+                  <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+                  Админ-папнель
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="px-3 py-2 border-bottom mb-3">
+      <div class="container d-flex flex-wrap justify-content-center">
+        <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
+          <a href="{% url 'search_ads' %}">
+            <button type="button" class="btn btn-light text-secondary me-2 px-4">Поиск...</button></a>
+        </form>
+
+        {% if request.user.is_authenticated %}
+        <div class="text-end">
+          <a href="{% url 'account_logout' %}">
+          <button type="button" class="btn btn-light text-dark me-2">Выйти</button></a>
+          <a href="{% url 'ad_create' %}">
+          <button type="button" class="btn btn-primary">Разместить объявление</button></a>
+        </div>
+        {% else %}
+        <div class="text-end">
+          <a href="{% url 'account_login' %}">
+          <button type="button" class="btn btn-light text-dark me-2">Войти</button></a>
+          <a href="{% url 'account_signup' %}">
+          <button type="button" class="btn btn-primary">Зарегистрироваться</button></a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </header>

@@ -1,0 +1,35 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+{{ reply_detail.content|truncatewords:3 }}
+{% endblock title %}
+
+
+{% block content %}
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold">{{ reply_detail.content }}</h1>
+          <p>{{ reply_detail.published_date }} <b>{{ reply_detail.user.username }}</b></p>
+          <hr>
+            <table>
+                <tr>
+                    <td>
+                        <form method="post" action="{% url 'confirm_reply' reply_detail.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary me-2">
+                                Принять</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'reject_reply' reply_detail.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-light text-dark me-2">
+                                Отклонить</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Отклики на мои объявления
+{% endblock title %}
+
+
+{% block content %}
+        <form class="" action="" method="get">
+            {{ filterset.form.as_p }}
+            <div class="d-grid gap-2 justify-content-sm-center">
+                <input class="btn btn-primary btn-lg px-4 gap-3" type="submit" value="Найти" /></div>
+        </form>
+    <p></p>
+    <h3 class="fw-bold text-sm-center">Отклики на ваши объявления</h3>
+    <hr>
+    {% if my_ads_reply_list %}
+        <table class="table">
+          <tr class="fw-bold">
+              <td>Объявление</td>
+              <td>Отклик</td>
+              <td>Отправитель</td>
+              <td>Дата отправки отклика</td>
+              <td></td>
+              <td>Действия</td>
+              <td>Статус</td>
+          </tr>
+        {% for reply in my_ads_reply_list %}
+        <tr>
+            <td>
+                <a class="text-decoration-none" href="{% url 'ad_detail' reply.ad.id %}">
+                {{ reply.ad.title }}</a>
+            </td>
+            <td>
+                {{ reply.content|truncatewords:7 }}
+            </td>
+            <td>
+                {{ reply.user }}
+            </td>
+            <td>
+                {{ reply.published_date }}
+            </td>
+            <td>
+                <a href="{% url 'reply_detail' reply.id %}">
+                <button type="button" class="btn btn-light text-dark me-2">Смотреть отклик</button></a>
+            </td>
+            <td>
+                <form method="post" action="{% url 'confirm_reply' reply.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary me-2">
+                        Принять</button>
+                </form>
+                <form method="post" action="{% url 'reject_reply' reply.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-light text-dark me-2">
+                        Отклонить</button>
+                </form>
+            </td>
+            <td style="font-weight: bold;">
+                {% if reply.status == 'unknown' %}
+                    <p class="text-secondary">на рассмотрении</p>
+                {% elif reply.status == 'accepted' %}
+                    <p style="color: #00cc00; ">принят</p>
+                {% else %}
+                    <p style="color: #cc0000; ">отклонено</p>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h3 class="fw-bold text-sm-center">Пока никто не отправлял отклик на ваши объявления</h3>
+    {% endif %}
+{% endblock content %}

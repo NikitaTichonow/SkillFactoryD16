@@ -1,0 +1,47 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Мои отклики
+{% endblock title %}
+
+
+{% block content %}
+    <h3 class="fw-bold text-sm-center">Мои отклики</h3>
+    {% if my_reply %}
+        <hr>
+        <table class="table">
+          <tr class="fw-bold">
+              <td>Объявление</td>
+              <td>Отклик</td>
+              <td>Дата отправки отклика</td>
+              <td>Статус</td>
+          </tr>
+        {% for reply in my_reply %}
+        <tr>
+            <td>
+                <a class="text-decoration-none" href="{% url 'ad_detail' reply.ad.id %}">
+                {{ reply.ad.title }}</a>
+            </td>
+            <td>
+                {{ reply.content|truncatewords:7 }}
+            </td>
+            <td>
+                {{ reply.published_date }}
+            </td>
+            <td style="font-weight: bold;">
+                {% if reply.status == 'unknown' %}
+                    <p class="text-secondary">на рассмотрении</p>
+                {% elif reply.status == 'accepted' %}
+                    <p style="color: #00cc00; ">принят</p>
+                {% else %}
+                    <p style="color: #cc0000; ">отклонено</p>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h3 class="fw-bold text-sm-center">Вы пока не оставляли откликов на объявления</h3>
+    {% endif %}
+{% endblock content %}

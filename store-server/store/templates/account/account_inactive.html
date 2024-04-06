@@ -1,0 +1,17 @@
+{% extends 'account/base.html' %}
+
+{% load i18n %}
+
+{% block head_title %}Активация аккаунта{% endblock %}
+
+{% block content %}
+
+  <h1 class="fs-4 text-sm-center">Введите код активации</h1>
+  <form action="{% url 'confirm_user' %}" method="post">
+    {% csrf_token %}
+    <label>
+      <input class="text" type="text" name="code" placeholder="Введите код активации">
+    </label>
+    <input class="btn btn-primary btn-lg px-4 gap-3" type="submit" value="Подтвердить">
+  </form>
+{% endblock content %}

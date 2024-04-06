@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Удаление объявления "{{ ad_delete.title }}"
+{% endblock title %}
+
+
+{% block content %}
+<h2 class="display-5 fw-bold text-sm-center">Удаление объявления</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    <p class="fs-4 text-sm-center">Удаляем "{{ ad_delete.title }}"?</p>
+    <div class="d-grid gap-2 justify-content-sm-center">
+    <input class="btn btn-primary btn-lg px-4 gap-3" type="submit" value="Удалить" />
+    </div>
+</form>
+{% endblock content %}

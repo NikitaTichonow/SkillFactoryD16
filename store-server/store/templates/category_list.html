@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Категории
+{% endblock title %}
+
+{% block content %}
+    <h3 class=" fw-bold text-sm-center">Категории</h3>
+    {% for category in category_list %}
+        <div class=" p-2  py-md-2 align-items-center justify-content-center">
+            <div class="list-group">
+                <a href="{% url 'show_cat' category.id %}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                        <div>
+                            <h6 class="mb-0">{{ category.name}}</h6>
+                        </div>
+                        <small class="opacity-50 text-nowrap"></small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

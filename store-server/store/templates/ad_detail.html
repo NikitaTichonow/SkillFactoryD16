@@ -1,0 +1,50 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+{{ ad_detail.title }}
+{% endblock title %}
+
+
+{% block content %}
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">{{ ad_detail.title }}</h1>
+      <p>{{ ad_detail.published_date }} <b>{{ ad_detail.author.user.username }}</b></p>
+      <hr>
+      <p class="col-md-8 fs-4">{{ ad_detail.content|safe }}</p>
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+    <h3 class="display-6 fw-bold">Сообщение на объявление</h3>
+    {% if replies %}
+      {% for reply in replies %}
+        {% if user == reply.user or user == reply.ad.author.user %}
+        <p class="col-md-8 fs-4">{{ reply.content }}</p>
+        <p>{{ reply.published_date }} {{ reply.user }}</p>
+        <hr>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p class="col-md-8 fs-4">Вы пока не оставили отклик на объявление</p>
+    {% endif %}
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <h3 class="display-6 fw-bold">Отправить сообщение на объявление?</h3>
+    <form action="{% url 'reply_create' ad_detail.id %}" method="post">
+      {% csrf_token %}
+      <div class="container-fluid py-5">
+      {{ reply_form.as_p }}</div>
+      <input class="btn btn-primary btn-lg px-4 gap-3" type="submit" value="Отправить">
+    </form>
+  {% else %}
+    <h3 class="display-6 fw-bold">Хотите отправить сообщение на объявление?</h3>
+    <a href="{% url 'account_login' %}">
+    <button class="btn btn-primary btn-lg px-4 gap-3">Войдите в свой аккаунт</button></a>
+    <span class="text-secondary col-md-8 fs-4">или</span>
+    <a href="{% url 'account_signup' %}">
+    <button class="btn btn-light btn-lg text-secondary px-4 gap-3">Зарегистрируйтесь</button></a>
+  {% endif %}
+{% endblock content %}

@@ -1,0 +1,49 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_tags %}
+
+
+{% block title %}
+Категория {% for name in category %} {{ name.name }} {% endfor %}
+{% endblock title %}
+
+
+{% block content %}
+    <h1 class="display-5 fw-bold  text-sm-center ">Категория: {% for name in category %} {{ name.name }} {% endfor %}</h1>
+    {% if category_ads %}
+        {% for ad_list in category_ads %}
+            <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">{{ ad_list.title }}</h1>
+                    <p class="col-md-8 fs-4">{{ ad_list.description }}</p>
+                    <a href="{% url 'ad_detail' ad_list.pk %}">
+                    <button class="btn btn-primary btn-lg" type="button">Посмотреть объявление</button></a>
+                    <p></p>
+                    <p>{{ ad_list.published_date }} {{ ad_list.author.user.username }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3 class="display-5  text-sm-center">Объявлений нет</h3>
+    {% endif %}
+
+    <div class="d-grid gap-2 justify-content-sm-center">
+        {% if page_obj.has_previous %}
+            <a href="?{% url_replace page=1 %}">1</a>
+                {% if page_obj.previous_page_number != 1 %}
+                    ...
+                    <a href="?{% url_replace page=page_obj.previous_page_number %}">{{page_obj.previous_page_number}}</a>
+                {% endif %}
+        {% endif %}
+
+        {{ page_obj.number }}
+
+        {% if page_obj.has_next %}
+            <a href="?{% url_replace page=page_obj.next_page_number %}">{{page_obj.next_page_number}}</a>
+            {% if page_obj.next_page_number != paginator.num_pages %}
+                ...
+                <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{page_obj.paginator.num_pages}}</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock content %}
