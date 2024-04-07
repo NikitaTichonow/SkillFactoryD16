@@ -30,8 +30,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('accounts.urls')),
 
-    re_path('upload/', login_required(upload), name='ckeditor_upload'),
-    re_path('browse/', login_required(never_cache(browse)), name='ckeditor_browse'),
+    re_path(r'^upload/', login_required(upload), name='ckeditor_upload'),
+    re_path(r'^browse/', login_required(never_cache(browse)), name='ckeditor_browse'),
 ]
 
 if settings.DEBUG:
